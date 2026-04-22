@@ -10,4 +10,4 @@ async def create_file(filename: str):
 
 @router.get("")
 async def get_all_files():
-    return {"hello" : "this all files"}
+    return {"hello" : "world"}
