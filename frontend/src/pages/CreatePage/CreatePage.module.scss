@@ -1,0 +1,100 @@
+$color-white: #fff;
+$shadow-stroke: #E5E7EB;
+$black-blue: rgba(#111827, 0.86);
+$light-blue: #3B82F6;
+
+.wrapper {
+  min-height: 100vh;
+  background: #f9fafb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.container {
+  width: 100%;
+  max-width: 800px;
+  background: $color-white;
+  border: 1px solid $shadow-stroke;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  color: $black-blue;
+  margin-bottom: 20px;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid $shadow-stroke;
+  border-radius: 10px;
+  font-size: 14px;
+  margin-bottom: 16px;
+  transition: 0.2s;
+
+  &:focus {
+    outline: none;
+    border-color: $light-blue;
+    box-shadow: 0 0 0 2px rgba($light-blue, 0.2);
+  }
+}
+
+.textarea {
+  width: 100%;
+  min-height: 250px;
+  padding: 14px;
+  border: 1px solid $shadow-stroke;
+  border-radius: 10px;
+  font-family: monospace;
+  font-size: 14px;
+  resize: vertical;
+  margin-bottom: 20px;
+  transition: 0.2s;
+
+  &:focus {
+    outline: none;
+    border-color: $light-blue;
+    box-shadow: 0 0 0 2px rgba($light-blue, 0.2);
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.buttonPrimary {
+  background: $light-blue;
+  color: $color-white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s;
+
+  &:hover {
+    background: darken($light-blue, 5%);
+  }
+}
+
+.buttonSecondary {
+  background: transparent;
+  color: $black-blue;
+  border: 1px solid $shadow-stroke;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    background: #f3f4f6;
+  }
+}
