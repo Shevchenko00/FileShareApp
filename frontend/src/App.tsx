@@ -1,25 +1,22 @@
-import Header from "@/components/Header/Header.tsx";
-import Footer from "@/components/Footer/Footer.tsx";
 import styles from "./App.module.scss";
-import PlusButton from "@/components/PlusButton/PlusButton.tsx";
+
+import {Routes, Route} from "react-router-dom";
+
+import CreatePage from "@/pages/CreatePage/CreatePage.tsx";
+import RootPage from "@/pages/RootPage/RootPage.tsx";
+
 function App() {
-
-  return (
-    <>
+    return (
         <div className={styles.page}>
-            <Header />
+
             <main className={styles.content}>
+                <Routes>
+                    <Route path="/create" element={<CreatePage/>}/>
+                    <Route path="/" element={<RootPage/>}/>
+                </Routes>
             </main>
-
-            <PlusButton />
-
-            <footer className={styles.footer} />
-            <Footer />
         </div>
-
-
-    </>
-  )
+    );
 }
 
-export default App
+export default App;
