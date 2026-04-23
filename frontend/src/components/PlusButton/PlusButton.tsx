@@ -1,18 +1,13 @@
 import styles from './PlusButton.module.scss';
 import { useState } from "react";
 
-import {
-    useCreateFileMutation,
-    useGetFileQuery
 
-} from "@/services/createApi.ts";
 import {useNavigate} from "react-router-dom";
 
 const PlusButton = () => {
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
 
-    const [createFile] = useCreateFileMutation();
 
     const {
         data: files,
@@ -20,9 +15,7 @@ const PlusButton = () => {
         isError: isFilesError
     } = useGetFileQuery();
 
-    const handlFileCreate = async () => {
-        await createFile({ file_name: "Test" }).unwrap();
-    };
+
     return (
         <div className={styles.wrapper}>
             {open && (

@@ -1,26 +1,26 @@
 import { api } from './api.ts'
 
 
-export const fileApi = api.injectEndpoints({
+export const pasteApi = api.injectEndpoints({
     endpoints: (builder) => ({
-        getFile: builder.query<
+        getPaste: builder.query<
             {},
             void
         >({
-            query: () => "/file",
-            providesTags: ["File"],
+            query: () => "/paste",
+            providesTags: ["Paste"],
         }),
 
-        createFile: builder.mutation<
+        createPaste: builder.mutation<
             void,
-            { file_name: string }
+            { title: string, text: string }
         >({
             query: (body) => ({
-                url: "/file/create",
+                url: "/paste/create",
                 method: "POST",
                 body,
             }),
-            invalidatesTags: ["File"],
+            invalidatesTags: ["Paste"],
         }),
     }),
     overrideExisting: false,
@@ -30,6 +30,6 @@ export const fileApi = api.injectEndpoints({
 
 
 export const {
-    useGetFileQuery,
-    useCreateFileMutation
-} = fileApi;
+    useGetPasteQuery,
+    useCreatePasteMutation
+} = pasteApi;

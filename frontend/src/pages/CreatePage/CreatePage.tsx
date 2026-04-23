@@ -1,9 +1,15 @@
 import styles from './CreatePage.module.scss';
 import {useState} from "react";
+import {useCreatePasteMutation} from "@/services/createApi.ts";
 
 const CreatePage = () => {
     const [title, setTitle] = useState<string>('');
     const [text, setText] = useState<string>('');
+    const [createPaste] = useCreatePasteMutation()
+
+    const handlePasteCreate = async () => {
+        await createPaste({ title, text }).unwrap();
+    };
     return (
         <div className={styles.wrapper}>
             <div className={styles.container}>
@@ -30,7 +36,7 @@ const CreatePage = () => {
                     }} className={styles.buttonSecondary}>
                         Clear
                     </button>
-                    <button className={styles.buttonPrimary}>
+                    <button onClick={ handlePasteCreate} className={styles.buttonPrimary}>
                         Create Paste
                     </button>
                 </div>

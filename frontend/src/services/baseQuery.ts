@@ -1,5 +1,6 @@
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-const API = import.meta.env.VITE_API_URL
+// const API = import.meta.env.VITE_API_URL
+const API = "http://localhost:2222"
 
 
 const baseQuery = fetchBaseQuery({
