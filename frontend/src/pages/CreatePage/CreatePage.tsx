@@ -10,7 +10,7 @@ const CreatePage = () => {
     const [createPaste] = useCreatePasteMutation()
 
     const handlePasteCreate = async () => {
-        await createPaste({ title, text, timeToDelete }).unwrap();
+        await createPaste({title, text, time_to_delete: timeToDelete}).unwrap();
     };
     return (
         <div className={styles.wrapper}>
@@ -51,7 +51,8 @@ const CreatePage = () => {
                         Clear
                     </button>
 
-                    <button disabled={!title.trim() || !text.trim()} onClick={ handlePasteCreate} className={styles.buttonPrimary}>
+                    <button disabled={!title.trim() || !text.trim()} onClick={handlePasteCreate}
+                            className={styles.buttonPrimary}>
                         Create Paste
                     </button>
                 </div>
