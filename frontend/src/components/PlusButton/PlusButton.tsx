@@ -3,18 +3,10 @@ import { useState } from "react";
 
 
 import {useNavigate} from "react-router-dom";
-import {useGetPasteQuery} from "@/services/pasteApi.ts";
 
 const PlusButton = () => {
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
-
-
-    const {
-        data: files,
-        isLoading: isFilesLoading,
-        isError: isFilesError
-    } = useGetPasteQuery();
 
 
     return (

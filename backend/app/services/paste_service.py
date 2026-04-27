@@ -1,7 +1,7 @@
 from app.repositories.paste_repository import PasteRepository
 
 from app.schemas.paste_schema import PasteCreateSchema
-
+from datetime import datetime
 from app.models.paste_model import PasteModel
 from app.utils.expire import get_expire_at
 
@@ -19,4 +19,16 @@ class PasteService:
         return await self.repo.create(new_paste_dict)
 
     async def get_all(self):
-        return await self.repo.get_all()
+        pastes = await self.repo.get_all()
+
+        return [
+            {
+                "id": p.id,
+                "title": p.title,
+                "text": p.text,
+                "time_to_delete": p.time_to_delete,
+                "expires_at": p.expires_at,
+                "is_expired": p.expires_at < datetime.utcnow(),
+            }
+            for p in pastes
+        ]
