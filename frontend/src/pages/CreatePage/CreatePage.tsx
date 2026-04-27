@@ -2,13 +2,14 @@ import styles from './CreatePage.module.scss';
 import {useState} from "react";
 import {useCreatePasteMutation} from "@/services/pasteApi.ts";
 import type {TimeToDelete} from "@/services/types.ts";
+import {useNavigate} from "react-router-dom";
 
 const CreatePage = () => {
     const [timeToDelete, setTimeToDelete] = useState<TimeToDelete>("1h");
     const [title, setTitle] = useState<string>('');
     const [text, setText] = useState<string>('');
     const [createPaste] = useCreatePasteMutation()
-
+    const navigate = useNavigate();
     const handlePasteCreate = async () => {
         await createPaste({title, text, time_to_delete: timeToDelete}).unwrap();
     };
@@ -51,7 +52,10 @@ const CreatePage = () => {
                         Clear
                     </button>
 
-                    <button disabled={!title.trim() || !text.trim()} onClick={handlePasteCreate}
+                    <button disabled={!title.trim() || !text.trim()} onClick={() => {
+                        handlePasteCreate();
+                        navigate("/");
+                    }}
                             className={styles.buttonPrimary}>
                         Create Paste
                     </button>

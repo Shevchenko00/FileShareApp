@@ -1,6 +1,6 @@
 from app.repositories.paste_repository import PasteRepository
 
-from app.schemas.paste_schema import PasteCreateSchema
+from app.schemas.paste_schema import PasteCreateSchema, PasteUpdateSchema
 from datetime import datetime
 from app.models.paste_model import PasteModel
 from app.utils.expire import get_expire_at
@@ -17,6 +17,22 @@ class PasteService:
         new_paste_dict["expires_at"] = get_expire_at(paste.time_to_delete)
 
         return await self.repo.create(new_paste_dict)
+
+    async def update(self, paste_id: int, data: PasteUpdateSchema):
+        paste = await self.repo.get_single(id=paste_id)
+
+        if not paste:
+            raise ValueError("Paste not found")
+
+        update_data = data.model_dump(exclude_unset=True)
+
+        if "time_to_delete" in update_data:
+            update_data["expires_at"] = get_expire_at(
+                update_data["time_to_delete"]
+            )
+
+        return await self.repo.update(paste, update_data)
+
 
     async def get_all(self):
         pastes = await self.repo.get_all()
