@@ -39,3 +39,9 @@ async def update_paste(
 ):
     return await service.update(paste_id, data)
 
+@router.get("/{paste_id}")
+async def get_single_paste(
+    paste_id: int,
+    service: PasteService = Depends(get_paste_service)
+):
+    return await service.get_single(paste_id)
