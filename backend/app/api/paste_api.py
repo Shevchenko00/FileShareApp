@@ -33,7 +33,7 @@ async def get_all_paste(
 
 @router.patch("/{paste_id}")
 async def update_paste(
-        paste_id: int,
+        paste_id: str,
         data: PasteUpdateSchema,
         service: PasteService = Depends(get_paste_service)
 ):

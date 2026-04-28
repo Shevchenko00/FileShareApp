@@ -11,13 +11,12 @@ const UpdatePage = () => {
     const { data: pastes } = useGetPasteQuery();
     const [updatePaste] = useUpdatePasteMutation();
 
-    const paste = pastes?.find(p => p.id === Number(id));
+    const paste = pastes?.find(p => p.id === String(id));
 
     const [timeToDelete, setTimeToDelete] = useState<TimeToDelete>("1h");
     const [title, setTitle] = useState("");
     const [text, setText] = useState("");
 
-    // 🔥 preload data
     useEffect(() => {
         if (paste) {
             setTitle(paste.title);
@@ -30,7 +29,7 @@ const UpdatePage = () => {
         if (!id) return;
 
         await updatePaste({
-            id: Number(id),
+            id,
             title,
             text,
             time_to_delete: timeToDelete,

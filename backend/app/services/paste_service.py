@@ -19,7 +19,7 @@ class PasteService:
 
         return await self.repo.create(new_paste_dict)
 
-    async def update(self, paste_id: int, data: PasteUpdateSchema):
+    async def update(self, paste_id: str, data: PasteUpdateSchema):
         paste = await self.repo.get_single(id=paste_id)
 
         if not paste:
