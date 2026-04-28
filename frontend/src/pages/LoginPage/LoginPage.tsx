@@ -54,7 +54,7 @@ export default function LoginPage() {
 
                     <button
                         className={styles.button}
-                        disabled={loginLoading}
+                        disabled={loginLoading || !password || !email}
                         type="submit"
                     >
                         {loginLoading ? "Logging in..." : "Login"}

@@ -89,7 +89,7 @@ async def get_me(
         user_service: Annotated[UsersService, Depends(get_user_service)],
         current_user=Depends(get_current_user),
 ):
-    user = await user_service.get_by_id(current_user.id)
+    user = await user_service.get_single(id=current_user.id)
 
     return UserViewModel(
         id=user.id,
