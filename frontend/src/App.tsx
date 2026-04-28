@@ -6,6 +6,7 @@ import CreatePage from "@/pages/CreatePage/CreatePage.tsx";
 import RootPage from "@/pages/RootPage/RootPage.tsx";
 import UpdatePage from "@/pages/UpdatePage/UpdatePage.tsx";
 import { ProtectedRoute } from '@/pages/ProtectedRoute/ProtectedRoute.tsx'
+import LoginPage from "@/pages/LoginPage/LoginPage.tsx";
 
 function App() {
     return (
@@ -13,6 +14,8 @@ function App() {
             <main className={styles.content}>
                 <Routes>
                     {/*<ProtectedRoute>*/}
+                    <Route path="/login" element={<LoginPage />} />
+
                     <Route path="/" element={
                         <RootPage />
                         } />
