@@ -1,6 +1,7 @@
 from fastapi import HTTPException
 
 from app.repositories.paste_repository import PasteRepository
+from app.repositories.user_repository import UsersRepository
 
 from app.schemas.paste_schema import PasteCreateSchema, PasteUpdateSchema
 from datetime import datetime
@@ -9,9 +10,9 @@ from app.utils.expire import get_expire_at
 
 
 class PasteService:
-    def __init__(self, repo: PasteRepository):
+    def __init__(self, repo: PasteRepository, user_repo: UsersRepository):
         self.repo = repo
-
+        self.user_repo = user_repo
     async def create(self, user_id: int, paste: PasteCreateSchema) -> PasteModel:
         data = paste.model_dump()
 
@@ -46,7 +47,7 @@ class PasteService:
 
     async def get_single(self, paste_id: str):
         paste = await self.repo.get_single(id=paste_id)
-
+        owner = await self.user_repo.get_single(id=paste.user_id)
         if not paste:
             raise ValueError("Paste not found")
 
@@ -63,6 +64,7 @@ class PasteService:
             "time_to_delete": paste.time_to_delete,
             "expires_at": paste.expires_at,
             "is_expired": paste.expires_at < datetime.utcnow(),
+            "owner": owner.email
         }
 
     async def get_all(self):
