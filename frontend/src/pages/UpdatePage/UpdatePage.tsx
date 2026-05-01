@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react";
-import type { TimeToDelete } from "@/services/types.ts";
-import { useUpdatePasteMutation, useGetPasteQuery } from "@/services/pasteApi.ts";
-import { useNavigate, useParams } from "react-router-dom";
+import {useEffect, useState} from "react";
+import type {TimeToDelete} from "@/services/types.ts";
+import {useUpdatePasteMutation, useGetPasteQuery} from "@/services/pasteApi.ts";
+import {useNavigate, useParams} from "react-router-dom";
 import styles from "@/pages/CreatePage/CreatePage.module.scss";
+import Header from "@/components/Header/Header.tsx";
 
 const UpdatePage = () => {
-    const { id } = useParams<{ id: string }>();
+    const {id} = useParams<{ id: string }>();
     const navigate = useNavigate();
 
-    const { data: pastes } = useGetPasteQuery();
+    const {data: pastes} = useGetPasteQuery();
     const [updatePaste] = useUpdatePasteMutation();
 
     const paste = pastes?.find(p => p.id === String(id));
@@ -39,61 +40,66 @@ const UpdatePage = () => {
     };
 
     return (
-        <div className={styles.wrapper}>
-            <div className={styles.container}>
-                <h1 className={styles.title}>Update paste</h1>
+        <>
+            <Header/>
 
-                <input
-                    className={styles.input}
-                    onChange={(e) => setTitle(e.target.value)}
-                    value={title}
-                    placeholder="Paste title..."
-                />
+            <div className={styles.wrapper}>
 
-                <textarea
-                    className={styles.textarea}
-                    onChange={(e) => setText(e.target.value)}
-                    value={text}
-                    placeholder="Write your code or text here..."
-                />
+                <div className={styles.container}>
+                    <h1 className={styles.title}>Update paste</h1>
 
-                <div className={styles.selectWrapper}>
-                    <label className={styles.label}>Delete after</label>
+                    <input
+                        className={styles.input}
+                        onChange={(e) => setTitle(e.target.value)}
+                        value={title}
+                        placeholder="Paste title..."
+                    />
 
-                    <select
-                        value={timeToDelete}
-                        onChange={(e) =>
-                            setTimeToDelete(e.target.value as TimeToDelete)
-                        }
-                        className={styles.select}
-                    >
-                        <option value="5m">5 minutes</option>
-                        <option value="1h">1 hour</option>
-                        <option value="1d">1 day</option>
-                    </select>
-                </div>
+                    <textarea
+                        className={styles.textarea}
+                        onChange={(e) => setText(e.target.value)}
+                        value={text}
+                        placeholder="Write your code or text here..."
+                    />
 
-                <div className={styles.actions}>
-                    <button
-                        onClick={() => {
-                            setText("");
-                            setTitle("");
-                        }}
-                        className={styles.buttonSecondary}
-                    >
-                        Reset
-                    </button>
+                    <div className={styles.selectWrapper}>
+                        <label className={styles.label}>Delete after</label>
 
-                    <button
-                        disabled={!title.trim() || !text.trim()}
-                        onClick={handleUpdate}
-                        className={styles.buttonPrimary}
-                    >
-                        Update Paste
-                    </button>
+                        <select
+                            value={timeToDelete}
+                            onChange={(e) =>
+                                setTimeToDelete(e.target.value as TimeToDelete)
+                            }
+                            className={styles.select}
+                        >
+                            <option value="5m">5 minutes</option>
+                            <option value="1h">1 hour</option>
+                            <option value="1d">1 day</option>
+                        </select>
+                    </div>
+
+                    <div className={styles.actions}>
+                        <button
+                            onClick={() => {
+                                setText("");
+                                setTitle("");
+                            }}
+                            className={styles.buttonSecondary}
+                        >
+                            Reset
+                        </button>
+
+                        <button
+                            disabled={!title.trim() || !text.trim()}
+                            onClick={handleUpdate}
+                            className={styles.buttonPrimary}
+                        >
+                            Update Paste
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 
