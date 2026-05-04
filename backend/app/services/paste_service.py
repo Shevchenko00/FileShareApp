@@ -68,7 +68,6 @@ class PasteService:
             "time_to_delete": paste.time_to_delete,
             "expires_at": paste.expires_at,
             "is_expired": paste.expires_at < datetime.utcnow(),
-            "owner": owner.email
         }
 
     async def get_all(self):

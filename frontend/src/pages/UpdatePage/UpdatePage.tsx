@@ -1,35 +1,38 @@
 import {useEffect, useState} from "react";
 import type {TimeToDelete} from "@/services/types.ts";
-import {useUpdatePasteMutation, useGetPasteQuery} from "@/services/pasteApi.ts";
+import {useUpdatePasteMutation, useGetOnePasteQuery} from "@/services/pasteApi.ts";
 import {useNavigate, useParams} from "react-router-dom";
 import styles from "@/pages/CreatePage/CreatePage.module.scss";
 import Header from "@/components/Header/Header.tsx";
 import {useGetMeQuery} from "@/services/userApi.ts";
 
 const UpdatePage = () => {
-    const {id} = useParams<{ id: string }>();
     const navigate = useNavigate();
 
-    const {data: pastes} = useGetPasteQuery();
     const [updatePaste] = useUpdatePasteMutation();
     const { data: getMe } = useGetMeQuery();
-    const paste = pastes?.find(p => p.id === String(id));
+    const { id } = useParams<{ id: string }>();
+
+    const { data: paste } = useGetOnePasteQuery(id!);
 
     const [timeToDelete, setTimeToDelete] = useState<TimeToDelete>("1h");
     const [title, setTitle] = useState("");
     const [text, setText] = useState("");
     useEffect(() => {
+        console.log("DEBUG:", { getMe, paste, id });
         if (!getMe || !paste) return;
 
         if (getMe.email !== paste.owner) {
-            navigate('/');
+            console.log("REDIRECT TRIGGER");
+            navigate(`/paste/${id}/read`);
+            return;
         }
 
         setTitle(paste.title);
         setText(paste.text);
         setTimeToDelete(paste.time_to_delete);
 
-    }, [getMe, paste]);
+    }, [getMe, paste, id, navigate]);
 
     const handleUpdate = async () => {
         if (!id) return;
