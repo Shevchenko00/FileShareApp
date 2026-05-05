@@ -2,21 +2,6 @@
 
 A modern full-stack web application for sharing and managing text pastes with authentication, built with TypeScript, Python, and React.
 
-## 📋 Table of Contents
-
-- [Overview](#overview)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Features](#features)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Running the Application](#running-the-application)
-- [API Documentation](#api-documentation)
-- [Frontend Development](#frontend-development)
-- [Backend Development](#backend-development)
-- [Database](#database)
-- [Docker Deployment](#docker-deployment)
-
 ## 🎯 Overview
 
 **PasteShareApp** is a full-stack application that enables users to create, share, and manage text pastes. The application features user authentication, real-time updates, and a responsive user interface.
