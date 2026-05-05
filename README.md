@@ -23,9 +23,9 @@ A modern full-stack web application for sharing and managing text pastes with au
 
 ## 🛠️ Tech Stack
 
-### Frontend (41.7% TypeScript, 14.8% SCSS)
-- **React 19.2.5** - UI library
-- **TypeScript 6.0.2** - Type-safe JavaScript
+### Frontend 
+- **React**
+- **TypeScript**
 - **Vite 8.0.9** - Build tool with HMR support
 - **Redux Toolkit 2.11.2** - State management
 - **React Redux 9.2.0** - React bindings for Redux
@@ -33,16 +33,16 @@ A modern full-stack web application for sharing and managing text pastes with au
 - **SCSS** - Styling with Sass
 - **ESLint** - Code linting
 
-### Backend (40% Python)
-- **FastAPI 0.136.0** - High-performance web framework
-- **Uvicorn 0.45.0** - ASGI server
-- **Pydantic 2.13.3** - Data validation
+### Backend 
+- **FastAPI** - High-performance web framework
+- **Uvicorn** - ASGI server
+- **Pydantic** - Data validation
 - **SQLAlchemy** - ORM (via Poetry)
-- **Alembic 1.18.4** - Database migrations
-- **PostgreSQL 15** - Primary database
-- **AsyncPG 0.31.0** - Async PostgreSQL driver
-- **Psycopg2 2.9.12** - PostgreSQL adapter
-- **JWT (PyJWT 2.12.1)** - Authentication
+- **Alembic** - Database migrations
+- **PostgreSQL** - Primary database
+- **AsyncPG** - Async PostgreSQL driver
+- **Psycopg2** - PostgreSQL adapter
+- **JWT (PyJWT)** - Authentication
 - **Passlib + Bcrypt** - Password hashing
 
 ### Infrastructure
@@ -53,31 +53,125 @@ A modern full-stack web application for sharing and managing text pastes with au
 
 ```
 PasteShareApp/
-├── backend/
-│   ├── app/
-│   │   ├── main.py          # FastAPI application entry point
-│   │   ├── api/
-│   │   │   └── routers/
-│   │   │       └── v1.py    # API v1 routes
-│   │   └── core/
-│   │       └── project_config.py  # Configuration settings
-│   ├── pyproject.toml       # Poetry dependencies
-│   ├── Dockerfile           # Backend container definition
-│   └── alembic/             # Database migrations
-├── frontend/
-│   ├── src/
-│   │   ├── main.tsx         # React entry point
-│   │   ├── App.tsx          # Root component
-│   │   ├── app/
-│   │   │   └── store.ts     # Redux store configuration
-│   │   └── index.css        # Global styles
-│   ├── package.json         # npm dependencies
-│   ├── tsconfig.json        # TypeScript configuration
-│   ├── vite.config.ts       # Vite configuration
-│   ├── Dockerfile           # Frontend container definition
-│   └── eslint.config.js     # ESLint configuration
-├── docker-compose.yml       # Multi-container orchestration
-└── README.md                # This file
+
+├── backend
+│   ├── alembic.ini
+│   ├── app
+│   │   ├── api
+│   │   │   ├── auth.py
+│   │   │   ├── paste_api.py
+│   │   │   └── routers.py
+│   │   ├── core
+│   │   │   ├── database_config.py
+│   │   │   └── project_config.py
+│   │   ├── dependencies
+│   │   │   ├── paste_dependencies.py
+│   │   │   └── user_dependencies.py
+│   │   ├── main.py
+│   │   ├── models
+│   │   │   ├── base_model.py
+│   │   │   ├── paste_model.py
+│   │   │   └── users_model.py
+│   │   ├── repositories
+│   │   │   ├── base_repository.py
+│   │   │   ├── paste_repository.py
+│   │   │   └── user_repository.py
+│   │   ├── schemas
+│   │   │   ├── auth_schema.py
+│   │   │   ├── base_schema.py
+│   │   │   ├── paste_schema.py
+│   │   │   └── user_schema.py
+│   │   ├── services
+│   │   │   ├── paste_service.py
+│   │   │   └── user_service.py
+│   │   └── utils
+│   │       ├── enums.py
+│   │       ├── expire.py
+│   │       ├── pasword_utils.py
+│   │       └── short_hash.py
+│   ├── Dockerfile
+│   ├── .env.dev
+│   ├── migrations
+│   │   ├── env.py
+│   │   ├── README
+│   │   ├── script.py.mako
+│   │   └── versions
+│   ├── poetry.lock
+│   └── pyproject.toml
+├── docker-compose.yml
+├── frontend
+│   ├── Dockerfile
+│   ├── .env_example
+│   ├── eslint.config.js
+│   ├── .gitignore
+│   ├── index.html
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── public
+│   │   ├── favicon.svg
+│   │   └── icons.svg
+│   ├── README.md
+│   ├── src
+│   │   ├── app
+│   │   │   └── store.ts
+│   │   ├── App.module.scss
+│   │   ├── App.tsx
+│   │   ├── assets
+│   │   ├── components
+│   │   │   ├── Footer
+│   │   │   │   ├── Footer.module.scss
+│   │   │   │   └── Footer.tsx
+│   │   │   ├── Header
+│   │   │   │   ├── Header.module.scss
+│   │   │   │   └── Header.tsx
+│   │   │   ├── PasteItems
+│   │   │   │   ├── PasteItems.module.scss
+│   │   │   │   └── PasteItems.tsx
+│   │   │   └── PlusButton
+│   │   │       ├── PlusButton.module.scss
+│   │   │       └── PlusButton.tsx
+│   │   ├── .env
+│   │   ├── features
+│   │   │   └── auth
+│   │   │       └── authSlice.ts
+│   │   ├── hooks
+│   │   │   └── useAuth.ts
+│   │   ├── index.css
+│   │   ├── main.tsx
+│   │   ├── pages
+│   │   │   ├── CreatePage
+│   │   │   │   ├── CreatePage.module.scss
+│   │   │   │   └── CreatePage.tsx
+│   │   │   ├── LoginPage
+│   │   │   │   ├── LoginPage.module.scss
+│   │   │   │   └── LoginPage.tsx
+│   │   │   ├── ProtectedRoute
+│   │   │   │   └── ProtectedRoute.tsx
+│   │   │   ├── ReadPage
+│   │   │   │   ├── ReadPage.module.scss
+│   │   │   │   └── ReadPage.tsx
+│   │   │   ├── RegisterPage
+│   │   │   │   ├── RegisterPage.module.scss
+│   │   │   │   └── RegisterPage.tsx
+│   │   │   ├── RootPage
+│   │   │   │   └── RootPage.tsx
+│   │   │   └── UpdatePage
+│   │   │       ├── UpdatePage.module.scss
+│   │   │       └── UpdatePage.tsx
+│   │   ├── services
+│   │   │   ├── api.ts
+│   │   │   ├── baseQuery.ts
+│   │   │   ├── pasteApi.ts
+│   │   │   ├── types.ts
+│   │   │   └── userApi.ts
+│   │   └── styles
+│   │       ├── index.scss
+│   │       └── _variables.scss
+│   ├── tsconfig.app.json
+│   ├── tsconfig.json
+│   ├── tsconfig.node.json
+│   └── vite.config.ts
+└── .gitignore
 ```
 
 ## ✨ Features
@@ -352,5 +446,5 @@ This project is open source and available on GitHub.
 ## 👨‍💻 Author
 
 **Shevchenko Olexander**
-- Email: shevchenko.sasha2005@gmail.com
+- Email: shevchenko.oleksandr0209@gmail.com
 - GitHub: [@Shevchenko00](https://github.com/Shevchenko00)
