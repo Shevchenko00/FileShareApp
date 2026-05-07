@@ -1,9 +1,23 @@
 import { useNavigate } from "react-router-dom";
 import styles from './PasteItems.module.scss';
+import {useState} from "react";
 
 const PasteItems = ({ pastes }) => {
     const navigate = useNavigate();
+    const [copiedId, setCopiedId] = useState(null);
 
+    const handleShare = async (id) => {
+        const link = `${window.location.origin}/paste/${id}/read`;
+
+        try {
+            await navigator.clipboard.writeText(link);
+            setCopiedId(id);
+
+            setTimeout(() => setCopiedId(null), 2000);
+        } catch (e) {
+            console.error("Copy failed", e);
+        }
+    }
     return (
         <div className={styles.list}>
             {pastes.map((paste) => (
@@ -33,13 +47,22 @@ const PasteItems = ({ pastes }) => {
                             </span>
                         </div>
 
-                        {/* ✨ MINIMAL EDIT BUTTON */}
-                        <button
-                            className={styles.editBtn}
-                            onClick={() => navigate(`/paste/${paste.id}/edit`)}
-                        >
-                            edit
-                        </button>
+
+                        <div className={styles.actions}>
+                            <button
+                                className={styles.editBtn}
+                                onClick={() => navigate(`/paste/${paste.id}/edit`)}
+                            >
+                                Edit
+                            </button>
+
+                            <button
+                                className={styles.shareBtn}
+                                onClick={() => handleShare(paste.id)}
+                            >
+                                {copiedId === paste.id ? "Copied ✓" : "Share"}
+                            </button>
+                        </div>
                     </div>
                 </div>
             ))}

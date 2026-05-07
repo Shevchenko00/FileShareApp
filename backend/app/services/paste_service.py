@@ -23,8 +23,7 @@ class PasteService:
             "user_id": user_id,
             "expires_at": expires_at,
         }
-        print("DEBUG USER_ID:", user_id, type(user_id))
-        print("DEBUG DATA:", new_paste_dict)
+
         return await self.repo.create(new_paste_dict)
 
     async def get_all_by_user(self, user_id: str):

@@ -61,6 +61,12 @@
   color: rgba($black-blue, 0.6);
 }
 
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .editBtn {
   background: transparent;
   border: none;
@@ -73,6 +79,30 @@
 
   &:hover {
     background: rgba($light-blue, 0.08);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.shareBtn {
+  background: rgba($light-blue, 0.08);
+  border: 1px solid rgba($light-blue, 0.2);
+  color: $light-blue;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  &:hover {
+    background: rgba($light-blue, 0.15);
+    border-color: $light-blue;
   }
 
   &:active {
