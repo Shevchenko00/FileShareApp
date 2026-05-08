@@ -2,15 +2,16 @@ import { useParams } from "react-router-dom";
 import {useGetOnePasteQuery} from "@/services/pasteApi.ts";
 import styles from "./ReadPage.module.scss";
 import Header from "@/components/Header/Header.tsx";
+import {Loader} from "@/components/Loader/Loader.tsx";
 
 const ReadPage = () => {
     const { id } = useParams<{ id: string }>();
 
-    const { data: paste, isLoading } = useGetOnePasteQuery(id!, {
+    const { data: paste, isLoading} = useGetOnePasteQuery(id!, {
         skip: !id,
     });
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return <Loader/>;
     if (!paste) return <div>Paste not found</div>;
 
     return (
