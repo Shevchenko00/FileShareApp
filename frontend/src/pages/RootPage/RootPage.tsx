@@ -27,7 +27,7 @@ const RootPage = () => {
                 )}
 
                 {!isLoading && !isError && pastes && (
-                    <PasteItems pastes={pastes} />
+                    <PasteItems pastes={pastes} isExpired={pastes.expired} />
                 )}
             </main>
 

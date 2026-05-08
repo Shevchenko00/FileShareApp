@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import styles from './PasteItems.module.scss';
 import {useState} from "react";
 
-const PasteItems = ({ pastes }) => {
+const PasteItems = ({ pastes, isExpired }) => {
     const navigate = useNavigate();
     const [copiedId, setCopiedId] = useState(null);
 
@@ -56,12 +56,13 @@ const PasteItems = ({ pastes }) => {
                                 Edit
                             </button>
 
-                            <button
+                            {isExpired ?  <button
                                 className={styles.shareBtn}
                                 onClick={() => handleShare(paste.id)}
                             >
                                 {copiedId === paste.id ? "Copied ✓" : "Share"}
-                            </button>
+                            </button> : <p></p> }
+
                         </div>
                     </div>
                 </div>
